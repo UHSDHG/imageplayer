@@ -1,6 +1,12 @@
 # 目录
 /MIND
+/SI
+/Proj_document
+/Source/SI_Proj/
 
+# 文件
+.o*
 *.o
-
 ./Source/readme.txt
+./Source/log.txt
+*.o*
