@@ -10,3 +10,4 @@
 ./Source/readme.txt
 ./Source/log.txt
 *.o*
+*.txt
