@@ -56,8 +56,6 @@ int fb_open()
 		perror("mmap");
 	}
 	
-	printf("blue\n");
-	fb_draw_back(WIDTH, HEIGHT, COLOR_BLUE);
 	
 	return 0;
 
@@ -92,3 +90,35 @@ void fb_draw_line(int begin_x, int begin_y, int end_x, int end_y, uint color)
 		*(fb_pfb + (unsigned int)(i * HEIGHT * 0.5) + i) = color;
 		}
 }
+
+
+
+void fb_draw_picture(const unsigned char *pdata)
+{
+	unsigned int x, y,cnt;
+
+	for(x = 0; x < WIDTH; x++){
+		cnt = x * HEIGHT;
+		for(y = 0; y < HEIGHT; y++){
+			cnt = cnt + y;
+			
+			*(fb_pfb + cnt) = ( ((pdata[cnt * 3]) << 0)  | ((pdata[cnt * 3 + 1]) << 8) | ((pdata[cnt * 3 + 2] ) << 16));
+		}
+	}
+}
+
+void fb_draw_picture1(const unsigned char *pdata)
+{
+	int x, y;
+	long cnt = 0;
+	for(x = 0; x < HEIGHT; x++){
+		for(y = 0; y < WIDTH; y++){
+		*(fb_pfb + x * WIDTH + y) = ( ((pdata[cnt]) << 0)  | ((pdata[++cnt]) << 8) | ((pdata[++cnt] ) << 16));
+		cnt++;
+			}
+		}
+	printf("fb_draw_picture1: complite.\n");
+}
+
+
+

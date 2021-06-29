@@ -18,7 +18,7 @@ export AS LD CC CPP AR NM STRIP OBJCOPY OBJDUMP
 # 编译器在编译时的参数设置
 CFLAGS := -Wall -O2 -g -DDEBUG
 # 添加头文件路径，不添加的话include目录下的头文件编译时找不到
-CFLAGS += -I $(shell pwd)/include -I/opt/libdecode/include
+CFLAGS += -I $(shell pwd)/include -I/opt/libdecode/include -I $(shell pwd)/image_manage
 
 # 链接器的链接参数设置
 #LDFLAGS := -ljpeg -lz -lpng -L/opt/libdecode/lib
@@ -37,7 +37,7 @@ obj-y += main.o
 
 # 添加顶层目录下的子文件夹（注意目录名后面加一个/）
 obj-y += display/
-# obj-y += image_manage/
+#obj-y += image_manage/
 #obj-y += include
 
 all: 

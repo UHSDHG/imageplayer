@@ -26,6 +26,11 @@ int fb_open();
 void fb_close();
 void fb_draw_back(uint width, uint height, uint color);
 void fb_draw_line(int begin_x, int begin_y, int end_x, int end_y, uint color);
+void fb_draw_picture(const unsigned char *pdata);
+void fb_draw_picture1(const unsigned char *pdata);
+
+
+
 
 
 

@@ -12,4 +12,4 @@
 *.o*
 *.txt
 # 目标文件
-./Source/imageplayer
+Source/imageplayer
