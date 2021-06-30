@@ -7,8 +7,8 @@
 # 文件
 .o*
 *.o
-./Source/readme.txt
-./Source/log.txt
+/Source/readme.txt
+/Source/log.txt
 *.o*
 *.txt
 # 目标文件
