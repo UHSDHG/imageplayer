@@ -1,4 +1,6 @@
 obj-y += fb.o
+obj-y += testlcd.o
+
 
 
 

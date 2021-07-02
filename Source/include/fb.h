@@ -3,6 +3,7 @@
 #ifndef __FB_H_
 #define __FB_H_
 
+#include "images.h"
 
 #define FBDEVICE "/dev/fb0"
 
@@ -24,10 +25,29 @@ typedef unsigned char uchar;
 
 int fb_open();
 void fb_close();
+
+// À¢±≥æ∞
 void fb_draw_back(uint width, uint height, uint color);
+// ª≠œﬂ
 void fb_draw_line(int begin_x, int begin_y, int end_x, int end_y, uint color);
+// œ‘ æÕº∆¨
 void fb_draw_picture(const unsigned char *pdata);
+void fb_draw_picture_a(const unsigned char *pdata);
+void fb_draw_picture_b(const unsigned char *pdata);
+
 void fb_draw_picture1(const unsigned char *pdata);
+void fb_draw_picture1_1(const unsigned char *pdata);
+
+//  –°Õº∆¨œ‘ æ
+void fb_draw_picture_small(const unsigned char *pdata, \
+const unsigned int height, const unsigned int width);
+
+void fb_draw_picture_greath(const unsigned char *pdata);
+
+ 
+void fb_draw_picture_small_anywhere(const unsigned int height_x,  \
+	const unsigned int width_y, const unsigned char *pdata);
+
 
 
 
