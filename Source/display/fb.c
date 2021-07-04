@@ -136,11 +136,11 @@ void fb_draw_picture_a(const unsigned char *pdata)
 void fb_draw_picture_b(const unsigned char *pdata)
 {
 	unsigned int x, y;
-	int cnt = -1;
+	int cnt = 0;
 
 	for(x = 0; x < WIDTH; x++){
 		for(y = 0; y < HEIGHT; y++){
-			*(fb_pfb++) = ( ((pdata[cnt]) << 0)  | ((pdata[cnt + 1]) << 8) | ((pdata[cnt + 2] ) << 16));
+			*(fb_pfb + x * HEIGHT + y) = ( ((pdata[cnt]) << 0)  | ((pdata[cnt + 1]) << 8) | ((pdata[cnt + 2] ) << 16));
 			cnt += 3;
 		}
 	}
@@ -247,9 +247,12 @@ void fb_draw_picture_greath(const unsigned char *pdata)
 void fb_draw_picture_small_anywhere(const unsigned int height_x, const unsigned int width_y, const unsigned char *pdata)
 {
 	int x, y;
+	
 	int cur_images_height_x = 370, cur_images_width_y = 255;
 	int  cnt2_image = 0;//cnt1_fb = 0,
 	int x_max, y_max;
+
+	
 
 //    对越界进行屏蔽
 	x_max = height_x + cur_images_height_x;
@@ -258,12 +261,14 @@ void fb_draw_picture_small_anywhere(const unsigned int height_x, const unsigned 
 	if(x_max > HEIGHT )  x_max = HEIGHT;
 	if(y_max > WIDTH) y_max = WIDTH;
 
-	for(x = height_x ; x < x_max; x++){
-		cnt2_image = (x - width_y) * cur_images_height_x;
-		for(y = width_y; y < y_max; y++){
-			
+	for(y = width_y; y < y_max; y++){
+		
+		cnt2_image = ((y - width_y) * cur_images_height_x * 3);
+		
+		for(x = height_x ; x < x_max; x++){
 
-		*(fb_pfb + x * HEIGHT + y) = ( ((pdata[cnt2_image]) << 0) | ((pdata[1 + cnt2_image]) << 8) | ((pdata[2 + cnt2_image] ) << 16));
+
+		*(fb_pfb + y * HEIGHT + x) = ( ((pdata[cnt2_image]) << 0) | ((pdata[1 + cnt2_image]) << 8) | ((pdata[2 + cnt2_image] ) << 16));
 		cnt2_image += 3;
 		}
 		
