@@ -4,6 +4,7 @@
 #define __FB_H_
 
 #include "images.h"
+#include "fbbmp.h"
 
 #define FBDEVICE "/dev/fb0"
 
@@ -32,6 +33,8 @@ void fb_draw_back(uint width, uint height, uint color);
 void fb_draw_line(int begin_x, int begin_y, int end_x, int end_y, uint color);
 // œ‘ æÕº∆¨
 void fb_draw_picture(const unsigned char *pdata);
+void fb_draw_picture_end1(bmp_picinfo *pic_data);
+
 void fb_draw_picture_a(const unsigned char *pdata);
 void fb_draw_picture_b(const unsigned char *pdata);
 
@@ -39,8 +42,12 @@ void fb_draw_picture1(const unsigned char *pdata);
 void fb_draw_picture1_1(const unsigned char *pdata);
 
 //  –°Õº∆¨œ‘ æ
-void fb_draw_picture_small(const unsigned char *pdata, \
+void fb_draw_picture_small(const         char *pdata, \
 const unsigned int height, const unsigned int width);
+
+void fb_draw_picture_small_endt0begin(const char *pdata, const unsigned int height, \
+	const unsigned int width);
+
 
 void fb_draw_picture_greath(const unsigned char *pdata);
 

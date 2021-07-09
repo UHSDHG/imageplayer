@@ -39,5 +39,6 @@ dep_file = .$@.d
 
 %.o : %.c
 	$(CC) $(CFLAGS) -Wp,-MD,$(dep_file) -c -o $@ $<
-	
+%.o : %.h
+
 .PHONY : $(PHONY)

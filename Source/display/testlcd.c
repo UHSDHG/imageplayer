@@ -1,35 +1,34 @@
 
 #include<stdio.h>
-#include<fb.h>
+#include<fbbmp.h>
+
+#include "fbbmp.h"
+
 
 extern unsigned int sleep(unsigned int seconds);
 
 void test()
 {
-		
-	printf("image_player\n");
-	fb_open();
-	
 
-	
+
+	analysis_bmp(open_bmp_Willo_lake);
 	while(1){
-		
-	fb_draw_picture_small(gImage_Card_Captor_Sakura, 1024, 600);
+
+	analysis_bmp(open_bmp_wangderearth1);
 	sleep(2);
-	//fb_draw_picture_b(gImage_Jey1);
+	analysis_bmp(open_bmp_mountainlu);
 	sleep(2);
 	
-	fb_draw_picture_small_anywhere(900, 0, gImage_WillowLake);
+	analysis_bmp(open_bmp_Willo_lake);
 	sleep(2);
 
-	fb_draw_picture_small_anywhere(850, 400, gImage_WillowLake);
+	analysis_bmp(open_bmp_sakura);
 	sleep(2);
 
-	fb_draw_picture_small_anywhere(300, 300, gImage_WillowLake1);
+	printf("test\n-------------------------");
+	analysis_bmp(open_bmp_penguin1);
 	sleep(2);
 
-	fb_draw_picture_small(gImage_mountainlu, 1024, 600);
-	sleep(2);	
 	}
 	
 }

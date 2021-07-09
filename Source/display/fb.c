@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <fb.h>
 
+#include "config.h"
 
 
 
@@ -33,25 +34,25 @@ int fb_open()
 	fb_fd = open(FBDEVICE, O_RDWR);
 	if(fb_fd < 0)
 	{
-		perror("open");
+		debug("open\n");
 		return -1;
 	}
 
-	printf("open %s device success!\n", FBDEVICE);
+	debug("open %s device success!\n", FBDEVICE);
 	
 	// 第二步：获取设备的硬件信息
 	ret = ioctl(fb_fd,FBIOGET_FSCREENINFO, &fb_fscreeninfo);
 	if(ret < 0)
 	{
-                perror("get_fixed_fbscreeninfo.\n");
+                debug("get_fixed_fbscreeninfo.\n");
                 return -1;
 	}
-	printf("open %s device var fbinfo success!\n", FBDEVICE);
+	debug("open %s device var fbinfo success!\n", FBDEVICE);
 
 	// 第三步：地址映射
 	fb_pfb = (int *)mmap(NULL, fb_fscreeninfo.smem_len, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, 0);
 	if(NULL == fb_pfb){
-		perror("mmap");
+		debug("mmap");
 	}
 	
 	
@@ -85,7 +86,7 @@ void fb_draw_line(int begin_x, int begin_y, int end_x, int end_y, uint color)
 	float k;
 	k = (end_y - begin_y) / ((float)end_x - begin_x);
 	b = begin_y - (begin_x * k);
-	printf("fb_draw_line: (%d,%d) (%d,%d).\n", begin_x, begin_y, end_x, end_y);
+	debug("fb_draw_line: (%d,%d) (%d,%d).\n", begin_x, begin_y, end_x, end_y);
 	sleep(1);
 	for(i = begin_x; i < end_x; i++){
 		
@@ -110,6 +111,31 @@ void fb_draw_picture(const unsigned char *pdata)
 		}
 	}
 }
+
+/*
+*函数名：analysis_bmp
+*函数功能：解析bmp图片，并使用fb_draw显示图片
+*
+*参数：const char * pdata分析的文件pathname
+*返回值：无
+*/
+
+void fb_draw_picture_end1(bmp_picinfo *pic_data)
+{
+	int x, y, count = 0;
+	
+	debug("pictureis:%s\n", pic_data->pathname);
+
+	for(y = pic_data->biHeight - 1; y >= 0; y--){
+		
+		for(x = 0; x < pic_data->biWidth; x++){
+			*(fb_pfb + y * HEIGHT + x)  = ( ((pic_data->pic_data[count + 0]) << 0)  |  ((pic_data->pic_data[count + 1]) << 8) | ((pic_data->pic_data[count + 2] ) << 16));
+			count += 3;
+		}
+	}
+}
+
+
 
 // 副本 a ok
 // 画图片函数 func3  有问题
@@ -146,11 +172,19 @@ void fb_draw_picture_b(const unsigned char *pdata)
 	}
 }
 
+/*
+*函数名： fb_draw_picture1_1
+*功能： 图片等于屏幕的情况下画图片，无彩色版本
+*参数： 图片数据指针 pdata
+*
+*返回值: -
+*
+* 完成状况：ok
+* 历史来源：-
+*原因：*(fb_pfb + x * WIDTH + y) = ( ((pdata[cnt++]) << 0)  | ((pdata[cnt++]) << 8) | ((pdata[cnt++] ) << 16));
 
-// 画图片函数 func3 ok
-// 无彩色版本
-// 原因 
-	//*(fb_pfb + x * WIDTH + y) = ( ((pdata[cnt++]) << 0)  | ((pdata[cnt++]) << 8) | ((pdata[cnt++] ) << 16));
+*/
+
 void fb_draw_picture1(const unsigned char *pdata)
 {
 	int x, y;
@@ -161,17 +195,27 @@ void fb_draw_picture1(const unsigned char *pdata)
 		cnt += 3;
 			}
 		}
-	printf("fb_draw_picture1: complite.\n");
+	debug("fb_draw_picture1: complite.\n");
 }
 
 
-// 画图片函数 func3 ok
+/*
+*函数名： fb_draw_picture1_1
+*功能： 图片等于屏幕的情况下画图片
+*参数： 图片数据指针 pdata
+*
+*返回值: -
+*
+* 完成状况：ok
+* 历史来源：-
+*/
+
 void fb_draw_picture1_1(const unsigned char *pdata)
 {
 	int x, y;
 	long cnt = 0;
 	for(x = 0; x < WIDTH; x++){
-		printf("%d\n", x);
+		debug("%d\n", x);
 		
 		for(y = 0; y < HEIGHT; y++){
 		*(fb_pfb + x * HEIGHT + y) = ( ((pdata[cnt]) << 0)  | ((pdata[cnt]) << 8) | ((pdata[cnt] ) << 16));
@@ -179,46 +223,83 @@ void fb_draw_picture1_1(const unsigned char *pdata)
 		cnt += 3;
 			}
 		}
-	printf("fb_draw_picture1: complite.\n");
+	debug("fb_draw_picture1: complite.\n");
 }
 
 
 
 
- 
 /*
+*函数名：fb_draw_picture_small
+*功能： 图片小于屏幕的情况下画图片
+*参数： 图片数据指针 pdata， height，width 图片的高和宽
 *
-// 画图篇函数test fun4 
-// test 小图片显示  
-// ok/
-
-height 图片长，width 图片宽；pdata 图片数组指针
-
-
-
+*返回值: -
+*
+* 完成状况：ok
+* 历史来源：-
 */
 
-void fb_draw_picture_small(const unsigned char *pdata, const unsigned int height, const unsigned int width)
+void fb_draw_picture_small(const char *pdata, const unsigned int height, const unsigned int width)
 {
-	int x, y;
+	int x =0, y = 0;
 	long cnt = 0;
-	for(x = 0; x < width; x++){
-		for(y = 0; y < height; y++){
+	for(y = 0; y < height; y++){
+		debug( "fb_draw_picture_small: complite line %d.\n" , x);
+		for(x = 0; x < width; x++){
 			
 		if((x < width) && (y < height)){ 
-		*(fb_pfb + x * HEIGHT + y) = ( ((pdata[cnt]) << 0) | ((pdata[cnt + 1]) << 8) | ((pdata[cnt + 2] ) << 16));
+		*(fb_pfb + y * HEIGHT + x) = ( ((pdata[cnt]) << 16) | ((pdata[cnt + 1]) << 8) | ((pdata[cnt + 2] ) << 0));
 		cnt += 3;
 		}
 		
 		
 			}
 		}
-	printf( "fb_draw_picture_small: complite.\n" );
+	debug( "fb_draw_picture_small: complite.\n" );
 }
 
-// 画图篇函数test fun5
-// test 大图片显示
-// 待完成，考虑，图片大小
+/*
+*
+// 画图篇函数test fun4_1
+// test 小图片显示  
+// ok/
+
+height 图片高，width 图片宽；pdata 图片数组指针
+
+
+
+*/
+
+void fb_draw_picture_small_endt0begin(const char *pdata, const unsigned int height, const unsigned int width)
+{
+	int x, y;
+//	long cnt = 0;
+	for(y = height - 1; y >= 0; y--){
+		for(x = width - 1; x >= 0; x--){
+			
+		if((x >= 0) && (y >= 0)){ 
+		*(fb_pfb + y * HEIGHT + x) =  ((*pdata << 0) | (*(pdata + 1)<< 8) | (*(pdata + 2) << 16));
+		pdata += 3;
+
+		}
+		
+		
+			}
+		}
+	debug( "fb_draw_picture_small: complite.\n" );
+}
+
+/*
+*函数名：fb_draw_picture_greath
+*功能： 图片大于屏幕的情况下画图片
+*参数： 图片数据指针 pdata
+*
+*返回值: 无
+*
+* 完成状况：ok
+*/
+
 
 void fb_draw_picture_greath(const unsigned char *pdata)
 {
@@ -234,15 +315,23 @@ void fb_draw_picture_greath(const unsigned char *pdata)
 		cnt += 3;
 		}
 	}
-	printf( "fb_draw_picture_greath: complite.\n" );
+	debug( "fb_draw_picture_greath: complite.\n" );
 }
 
 
 
-// 画图篇函数test fun6 任意起点 显示
-// 函数来源 test fun4
-// test 小图片显示  在屏幕中间
-// ok
+
+/*
+*函数名：fb_draw_picture_small_anywhere
+*功能： 画小图片，以屏幕任意一个点开始
+*参数：高 height_x 宽 width_y , (height_x, width_y) 是图片显示的起点坐标； 图片数据指针 pdata
+*
+*返回值: 无
+*
+* 完成状况：ok
+*/
+
+
 
 void fb_draw_picture_small_anywhere(const unsigned int height_x, const unsigned int width_y, const unsigned char *pdata)
 {
@@ -252,7 +341,7 @@ void fb_draw_picture_small_anywhere(const unsigned int height_x, const unsigned 
 	int  cnt2_image = 0;//cnt1_fb = 0,
 	int x_max, y_max;
 
-	
+
 
 //    对越界进行屏蔽
 	x_max = height_x + cur_images_height_x;
@@ -274,6 +363,6 @@ void fb_draw_picture_small_anywhere(const unsigned int height_x, const unsigned 
 		
 		
 	}
-	printf( "fb_draw_picture_small_anywhere: complite.\n" );
+	debug( "fb_draw_picture_small_anywhere: complite.\n" );
 }
 
