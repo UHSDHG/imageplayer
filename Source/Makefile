@@ -1,6 +1,6 @@
 
-CROSS_COMPILE = arm-none-linux-gnueabi-
-#CROSS_COMPILE = /usr/local/arm/arm-2009q3/bin/arm-none-linux-gnueabi-
+#CROSS_COMPILE = arm-none-linux-gnueabi-
+CROSS_COMPILE = /usr/local/arm/arm-2009q3/bin/arm-none-linux-gnueabi-
 
 AS			= $(CROSS_COMPILE)as
 LD			= $(CROSS_COMPILE)ld
@@ -21,7 +21,7 @@ CFLAGS := -Wall -O2 -g -DDEBUG
 CFLAGS += -I $(shell pwd)/include -I/opt/libdecode/include -I $(shell pwd)/image_manage
 
 # 链接器的链接参数设置
-#LDFLAGS := -ljpeg -lz -lpng -L/opt/libdecode/lib
+LDFLAGS := -ljpeg -lz -lpng -L/opt/libdecode/lib
 
 export CFLAGS LDFLAGS
 
@@ -45,7 +45,7 @@ all:
 	$(CC) $(LDFLAGS) -o $(TARGET) built-in.o
 
 cp:
-	cp ../Source/ /root/porting_x210/rootfs/rootfs/app -rf
+	cp ../Source/ /root/porting_x210/rootfs/app -rf
 
 clean:
 	rm -f $(shell find -name "*.o")

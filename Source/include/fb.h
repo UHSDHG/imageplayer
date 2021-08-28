@@ -5,6 +5,8 @@
 
 #include "images.h"
 #include "fbbmp.h"
+#include "fbjpeg.h"
+
 
 #define FBDEVICE "/dev/fb0"
 
@@ -58,7 +60,9 @@ void fb_draw_picture_small_anywhere(const unsigned int height_x,  \
 
 
 
+void fb_draw_jpeg(jpeg_picinfop pdata);
 
+void put_scanline_someplace(unsigned char *buffer,int           row_stride, int line);
 
 
 

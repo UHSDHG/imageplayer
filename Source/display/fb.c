@@ -13,24 +13,57 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <fb.h>
+#include <fbjpeg.h>
 
 #include "config.h"
 
 
 
-
+typedef int (*fb_pfbp)[1024];
 
 
 struct fb_fix_screeninfo fb_fscreeninfo;
 struct fb_var_screeninfo fb_get_vscreeninfo;
+fb_pfbp my_fb_pfb = (fb_pfbp)NULL;
 int *fb_pfb = NULL;
 int fb_fd = -1, ret = -1;
 
+int fb_open_add1()
+{
+	
+	fb_fd = open(FBDEVICE, O_RDWR);
+	if(fb_fd < 0)
+	{
+		debug("open\n");
+		return -1;
+	}
 
+	debug("open %s device success!\n", FBDEVICE);
+	
+	// 第二步：获取设备的硬件信息
+	ret = ioctl(fb_fd,FBIOGET_FSCREENINFO, &fb_fscreeninfo);
+	if(ret < 0)
+	{
+                debug("get_fixed_fbscreeninfo.\n");
+                return -1;
+	}
+	debug("open %s device var fbinfo success!\n", FBDEVICE);
+
+	// 第三步：地址映射
+	my_fb_pfb = (fb_pfbp)mmap(NULL, fb_fscreeninfo.smem_len, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, 0);
+	if(NULL == my_fb_pfb){
+		debug("mmap");
+	}
+	
+	
+	return 0;
+
+}
 
 
 int fb_open()
 {
+	debug("i am here.\n");
 	fb_fd = open(FBDEVICE, O_RDWR);
 	if(fb_fd < 0)
 	{
@@ -364,5 +397,65 @@ void fb_draw_picture_small_anywhere(const unsigned int height_x, const unsigned 
 		
 	}
 	debug( "fb_draw_picture_small_anywhere: complite.\n" );
+}
+
+
+
+/*****************************************************************************************************************
+*
+*显示jpeg图片
+*****************************************************************************************************************/
+void fb_draw_jpeg(jpeg_picinfop pdata){
+	
+	int i,j;
+	int width,height;
+	unsigned char *pic = pdata->data;
+
+	debug("pic = %p\n",pic);
+	debug("fb_pfb  = %p\n",fb_pfb );
+	
+	unsigned int cnt = 0;
+
+	
+	if(pdata->biWidth <= 1024) width = pdata->biWidth;
+	else width = 1024;
+	
+	if(pdata->biHeight <= 600) height = pdata->biHeight;
+	else height = 600;
+	
+	debug("i am here.\n");
+	debug("height  = %d\n",height );
+	debug("width  = %d\n",width );
+
+	for(i = 0; i < height; i++){
+		//debug("i =%d\n", i);
+		cnt = i * pdata->biWidth*3;
+		for(j = 0; j < width; j++){
+		*(fb_pfb + i * width + j) = ( ((pic[cnt+0]) << 0) | ((pic[cnt+1]) << 8) | ((pic[cnt+2]) << 16));
+
+		cnt+=3;
+		}
+	}
+
+debug("finish\n");
+
+}
+void put_scanline_someplace(unsigned char *buffer,int           row_stride, int line){
+#ifndef no_compile
+	debug("i am here!\n");
+	int i;
+	int width;
+	int cnt = 0;
+	if(row_stride > 1024) width = 1024;
+	else width = row_stride;
+	debug("row_stride = %d\n", row_stride);
+	debug("width = %d\n", width);
+	debug("fb_pfb = %p\n", fb_pfb);
+	for(i = 0; i < width; i++){
+		
+		*(fb_pfb + line * width + i) = ( ((buffer[cnt+0]) << 0) | ((buffer[cnt+1]) << 8) | ((buffer[cnt+2]) << 16));
+		cnt += 3;
+	}
+#endif
 }
 

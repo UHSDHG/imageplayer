@@ -1,8 +1,8 @@
 
 #include<stdio.h>
 #include<fbbmp.h>
-
-#include "fbbmp.h"
+#include"fbjpeg.h"
+#include"config.h"
 
 
 extern unsigned int sleep(unsigned int seconds);
@@ -11,23 +11,14 @@ void test()
 {
 
 
-	analysis_bmp(open_bmp_Willo_lake);
+	//analysis_bmp(open_bmp_Willo_lake);
 	while(1){
-
-	analysis_bmp(open_bmp_wangderearth1);
-	sleep(2);
-	analysis_bmp(open_bmp_mountainlu);
-	sleep(2);
-	
-	analysis_bmp(open_bmp_Willo_lake);
+	printf("test-------------------------\n");
+	display_jpeg(open_jpeg_GEM);
 	sleep(2);
 
-	analysis_bmp(open_bmp_sakura);
-	sleep(2);
+	printf("-------------------------test\n\n\n");
 
-	printf("test\n-------------------------");
-	analysis_bmp(open_bmp_penguin1);
-	sleep(2);
 
 	}
 	
