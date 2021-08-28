@@ -13,11 +13,11 @@ void test()
 
 	//analysis_bmp(open_bmp_Willo_lake);
 	while(1){
-	printf("test-------------------------\n");
-	display_jpeg(open_jpeg_GEM);
+	debug("test-------------------------\n");
+	display_jpeg(open_jpeg_Jey);
 	sleep(2);
 
-	printf("-------------------------test\n\n\n");
+	debug("-------------------------test\n\n\n");
 
 
 	}

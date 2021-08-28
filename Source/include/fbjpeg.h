@@ -3,6 +3,9 @@
 
 #include <sys/types.h>
 
+/*
+* 图片信息
+*/
 #define open_jpeg_sakura "./image_manage/sakura.jpeg"
 #define open_jpeg_GEM "./image_manage/GEM.jpeg"
 #define open_jpeg_Jey "./image_manage/Jey.jpeg"
@@ -16,6 +19,7 @@ typedef struct jpeg_picinfo
 {
 	const char *pathname; // 文件路径
 	char *pic_data;
+	FILE *infile;
 	int fd;
 	u_int16_t bfType;   // 文件类型
     u_int32_t bfSize;   // 文件大小 
@@ -26,7 +30,7 @@ typedef struct jpeg_picinfo
     u_int32_t biCompression;   // 压缩格式，0表示不压缩
     u_int32_t biSizeImage;   // 位图数据的大小，当用BI_RGB格式时，可以设置为0；
     u_int32_t *length;
-	unsigned char *data;
+	unsigned char *data;    //图片数据指针
 }jpeg_picinfo,*jpeg_picinfop;
 #pragma pack();
 
