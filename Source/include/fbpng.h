@@ -1,26 +1,31 @@
-#ifndef __FBJPEG_H_
-#define __FBJPEG_H_
+#ifndef __FBPNG_H_
+#define __FBPNG_H_
 
+
+
+#include <stdio.h>
 #include <sys/types.h>
 
-/*
-* 图片信息
-*/
-#define open_jpeg_sakura "./image_manage/sakura.jpeg"
-#define open_jpeg_GEM "./image_manage/GEM.jpeg"
-#define open_jpeg_Jey "./image_manage/Jey.jpeg"
-#define open_jpeg_Jey1 "./image_manage/Jey1.jpeg"
-#define open_jpeg_animal "./image_manage/animal.jpeg"
+
+
+#define open_png_sakura "./image_manage/sakura.png"
+#define open_png_GEM "./image_manage/GEM.PNG"
+#define open_png_space "./image_manage/space.png"
+#define open_png_Jey "./image_manage/Jey.png"
+
+#define open_bmp_penguin1 "./image_manage/penguin1.bmp"
 
 
 
 #pragma pack(1);
-typedef struct jpeg_picinfo
+
+
+typedef struct png_picinfo
 {
 	const char *pathname; // 文件路径
-	char *pic_data;
-	FILE *infile;
-	int fd;
+	unsigned char *data;
+	int fd;	
+	FILE *file;
 	u_int16_t bfType;   // 文件类型
     u_int32_t bfSize;   // 文件大小 
     u_int32_t bfOffBits;   // 从文件头到位图数据的偏移量
@@ -29,40 +34,20 @@ typedef struct jpeg_picinfo
     u_int16_t biBitCount;   //说明像素比特数 1，2，4，8，16，24，32
     u_int32_t biCompression;   // 压缩格式，0表示不压缩
     u_int32_t biSizeImage;   // 位图数据的大小，当用BI_RGB格式时，可以设置为0；
-    u_int32_t length;
-	unsigned char *data;    //图片数据指针
-}jpeg_picinfo,*jpeg_picinfop;
+}png_picinfo, *png_picinfop;
 #pragma pack();
 
 
 
 
+int is_png(const char * pathname);
+int display_png(const char * pathname);
+#define PNG_BYTES_TO_CHECK 4
 
-int display_jpeg(const char *pdata);
 
 
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

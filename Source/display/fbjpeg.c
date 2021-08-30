@@ -7,6 +7,7 @@
 #include <string.h>
 #include "config.h"
 #include "fbjpeg.h"
+#include "fb.h"
 
 #include <jpeglib.h>
 #include <setjmp.h>
@@ -99,7 +100,7 @@ void read_jpeg (jpeg_picinfop pic_data){
 
   if ((infile = fopen(pic_data->pathname, "rb")) == NULL) {
     fprintf(stderr, "can't open %s\n", pic_data->pathname);
-    return 0;
+    return ;
   }
   debug("open file success.\n");
 
@@ -110,7 +111,7 @@ void read_jpeg (jpeg_picinfop pic_data){
   if (setjmp(jerr.setjmp_buffer)) {
     jpeg_destroy_decompress(&cinfo);
     fclose(infile);
-    return 0;
+    return ;
   }
 
   jpeg_create_decompress(&cinfo);
@@ -183,7 +184,7 @@ void read_jpeg (jpeg_picinfop pic_data){
   (void) jpeg_finish_decompress(&cinfo);
   jpeg_destroy_decompress(&cinfo);
   fclose(infile);
-  return 0;
+  return ;
 }
 
 
@@ -219,7 +220,7 @@ int display_jpeg(const char * filename)
 	//ÊÍ·Å×ÊÔ´
 	free(pic_data->data);
 	free(pic_data);
-
+	return 0;
 
 }
 
