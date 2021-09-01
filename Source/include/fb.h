@@ -3,10 +3,9 @@
 #ifndef __FB_H_
 #define __FB_H_
 
-#include "images.h"
-#include "fbbmp.h"
-#include "fbjpeg.h"
 
+#include "fbjpeg.h"
+#include "config.h"
 
 #define FBDEVICE "/dev/fb0"
 

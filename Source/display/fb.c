@@ -13,7 +13,6 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <fb.h>
-#include <fbjpeg.h>
 
 #include "config.h"
 

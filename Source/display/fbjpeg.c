@@ -6,7 +6,6 @@
 
 #include <string.h>
 #include "config.h"
-#include "fbjpeg.h"
 #include "fb.h"
 
 #include <jpeglib.h>
@@ -21,24 +20,25 @@
 *is jpeg file of check pic 
 *output: return 0 is jpeg , 1 is not jpeg
 */
-int is_jpeg(jpeg_picinfop pic_data){
+int is_jpg(const char *pathname){
 	int ret = 0;
 	unsigned int data =0;
+	FILE *infile;
 
 	
 	debug("i am here\n");
-	debug("pic_data->pathname = %s\n", pic_data->pathname);
+	debug("pic_data->pathname = %s\n", pathname);
 
 
 	
-	if ((pic_data->infile = fopen(pic_data->pathname, "rb")) == NULL) {
-		fprintf(stderr, "can't open %s\n", pic_data->pathname);
+	if ((infile = fopen(pathname, "rb")) == NULL) {
+		fprintf(stderr, "can't open %s\n", pathname);
 		return -1;
 	  }
 	debug("open file success.\n");
 
 	// 读取文件首位两个字节，判断是否匹配
-	fread(&data, 2, 1, pic_data->infile);
+	fread(&data, 2, 1, infile);
 	debug("data = %x\n", data);
 	switch (data)
 		{
@@ -47,7 +47,7 @@ int is_jpeg(jpeg_picinfop pic_data){
 		default:ret = -1;break;
 		}
 
-	fclose(pic_data->infile);
+	fclose(infile);
 	return ret;
 }
 
@@ -191,7 +191,7 @@ void read_jpeg (jpeg_picinfop pic_data){
 
 
 
-int display_jpeg(const char * filename) 
+int display_jpg(const char * filename) 
 {
 	//实例化pic_data
 	debug("i am here\n");
@@ -200,7 +200,7 @@ int display_jpeg(const char * filename)
   	pic_data->pathname = filename;
 
 	//判断是否为jpeg文件
-	 if(-1 == is_jpeg(pic_data)) {
+	 if(-1 == is_jpg(pic_data->pathname)) {
 	debug("%s not jpeg file\n", pic_data->pathname);
 		return -1;
   	}

@@ -7,7 +7,6 @@
 #include <unistd.h>
 
 #include "fb.h"
-#include "fbbmp.h"
 #include "config.h"
 
 
@@ -91,7 +90,7 @@ my_close_do:
 *返回值：无
 */
 
-void analysis_bmp(const      char * pdata){
+void display_bmp(const      char * pdata){
 	// 第一步：实例化pic_data图片数据结构体 , pathname 给pic_data填充
 	bmp_picinfo *pic_data = NULL;
 	pic_data = (bmp_picinfo *)malloc(sizeof(bmp_picinfo)); 
