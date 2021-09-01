@@ -30,13 +30,13 @@ void test()
 	//debug("/n is_png(open_png_GEM) = %d.\n",is_png(open_png_GEM));
 	//debug("/n is_png(open_bmp_sakura) = %d.\n",is_png(open_bmp_sakura));
 
-	scan_image2("./image_manage");
+	//scan_image2("./image_manage");
 	//display_jpeg(open_jpeg_sakura);
-	debug("-------------------------test\n\n\n");
+	//debug("-------------------------test\n\n\n");
 
-	print_images();
-	
-	show_images();
+	//print_images();
+	display_png(open_png_GEM);
+	//show_images();
 	sleep(1);
 
 	

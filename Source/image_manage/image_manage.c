@@ -28,7 +28,7 @@ unsigned int image_index = 0;			// 数组images中的计数index
 // 拿出相应的图片来显示即可
 // path是要去检索的文件夹的pathname
 int init(){
-
+	
 	;
 	return 0;
 
@@ -55,7 +55,7 @@ int scan_image(const char *path)
 
 		
 
-		debug("d_name = %s.\n", ptr->d_name);
+		//debug("d_name = %s.\n", ptr->d_name);
 		debug("d_type = %d, DT_REG = %d, DT_DIR = %d, DT_UNKNOWN = %d.\n", 
 			ptr->d_type, DT_REG, DT_DIR, DT_UNKNOWN);
 		switch (ptr->d_type)
@@ -108,7 +108,10 @@ int scan_image2(const char *path)
 		strcat(base,ptr->d_name);
 		// 将pathname 中的 文件信息，填充到sta结构体中
 		lstat(base, &sta);
-		debug("%s\n", base);
+		
+		debug("                           base = %s\n", base);
+
+		
 		if (S_ISREG(sta.st_mode))// S_ISREG 是通过这个宏，判断base的pathname文件是否是REG文件
 		{
 			//printf("regular file.\n");
@@ -121,12 +124,12 @@ int scan_image2(const char *path)
 				strcpy(images[image_index].pathname, base);
 				images[image_index].type = image_type_BMP;
 			}
-			if (!is_jpg(base))
+			else if (!is_jpg(base))
 			{
 				strcpy(images[image_index].pathname, base);
 				images[image_index].type = image_type_JPG;
 			}
-			if (!is_png(base))
+			else if (!is_png(base))
 			{
 				strcpy(images[image_index].pathname, base);
 				images[image_index].type = image_type_PNG;

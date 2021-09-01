@@ -38,8 +38,8 @@
 #define open_jpeg_animal "./image_manage/animal.jpeg"
 
 
-#define open_png_sakura "./image_manage/sakura.PNG"
-#define open_png_GEM "./image_manage/GEM.PNG"
+#define open_png_sakura "./image_manage/png/sakura.PNG"
+#define open_png_GEM "./image_manage/png/GEM.PNG"
 #define open_png_space "./image_manage/space.PNG"
 #define open_png_Jey "./image_manage/Jey.PNG"
 
@@ -135,7 +135,7 @@ typedef struct jpeg_picinfo
 typedef struct png_picin
 {
 	const char *pathname; // 文件路径
-	unsigned char *data;
+	unsigned char **data;
 	int fd;	
 	FILE *file;
 	u_int16_t bfType;   // 文件类型

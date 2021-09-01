@@ -64,6 +64,7 @@ void fb_draw_jpeg(jpeg_picinfop pdata);
 void put_scanline_someplace(unsigned char *buffer,int           row_stride, int line);
 
 
+void fb_draw_png(png_picinfop pdata);
 
 
 

@@ -458,3 +458,44 @@ void put_scanline_someplace(unsigned char *buffer,int           row_stride, int 
 #endif
 }
 
+/*****************************************************************************************************************
+*
+*ÏÔÊ¾pngÍ¼Æ¬
+*****************************************************************************************************************/
+
+void fb_draw_png(png_picinfop pdata){
+	debug("fb_draw_png i am here.\n");
+	int i,j;
+	int width,height;
+	unsigned char *pic = pdata->data;
+
+	debug("pic = %p\n",pic);
+	debug("fb_pfb  = %p\n",fb_pfb );
+	
+	unsigned int cnt = 0;
+
+	
+	if(pdata->biWidth <= 1024) width = pdata->biWidth;
+	else width = 1024;
+	
+	if(pdata->biHeight <= 600) height = pdata->biHeight;
+	else height = 600;
+	
+	debug("i am here.\n");
+	debug("height  = %d\n",height );
+	debug("width  = %d\n",width );
+
+	for(i = 0; i < height; i++){
+		//debug("i =%d\n", i);
+		cnt = i * pdata->biWidth*3;
+		for(j = 0; j < width; j++){
+		*(fb_pfb + i * width + j) = ( ((pic[cnt+0]) << 0) | ((pic[cnt+1]) << 8) | ((pic[cnt+2]) << 16));
+
+		cnt+=3;
+		}
+	}
+
+debug("finish\n");
+
+}
+
