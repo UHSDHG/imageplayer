@@ -61,13 +61,11 @@ typedef struct BITMAPFILEHEADER
     u_int16_t bfReserved2;   
     u_int32_t bfOffBits;   // 从文件头到位图数据的偏移量
 }BITMAPFILEHEADER;   
-
 #pragma pack();
 
 
 #pragma pack(1);
-// 信息头结构体
-typedef struct BITMAPINFOHEADER  
+typedef struct BITMAPINFOHEADER // 信息头结构体 
 {   
     u_int32_t biSize;   //信息头大小
     u_int32_t biWidth;   // 位图的像素宽
@@ -89,8 +87,6 @@ typedef struct BITMAPINFOHEADER
 
 
 #pragma pack(1);
-
-
 typedef struct bmp_picinfo
 {
 	const char *pathname; // 文件路径
@@ -107,8 +103,8 @@ typedef struct bmp_picinfo
 }bmp_picinfo;
 #pragma pack();
 
-// jpeg 结构体
-#pragma pack(1);
+
+#pragma pack(1);// jpeg 结构体
 typedef struct jpeg_picinfo
 {
 	const char *pathname; // 文件路径
@@ -130,8 +126,6 @@ typedef struct jpeg_picinfo
 
 //png结构体
 #pragma pack(1);
-
-
 typedef struct png_picin
 {
 	const char *pathname; // 文件路径
@@ -148,6 +142,9 @@ typedef struct png_picin
     u_int32_t biSizeImage;   // 位图数据的大小，当用BI_RGB格式时，可以设置为0；
 }png_picinfo, *png_picinfop;
 #pragma pack();
+
+// image_manage.h 结构体
+
 
 
 /***********************************函数原型******************************************/

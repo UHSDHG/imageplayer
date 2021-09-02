@@ -18,8 +18,9 @@
 
 
 // 定义存储图片信息的数组
+
 image_info_t images[MAX_IMAGES_CNT];
-unsigned int image_index = 0;			// 数组images中的计数index
+unsigned int image_index = 0;			// 数组images中的计数index	
 
 
 // images数组本来是空的，然后程序初始化时会去一个事先约定好的目录(image目录)下去
@@ -28,8 +29,6 @@ unsigned int image_index = 0;			// 数组images中的计数index
 // 拿出相应的图片来显示即可
 // path是要去检索的文件夹的pathname
 int init(){
-	
-	;
 	return 0;
 
 }
@@ -123,19 +122,20 @@ int scan_image2(const char *path)
 			{
 				strcpy(images[image_index].pathname, base);
 				images[image_index].type = image_type_BMP;
+				image_index++;
 			}
 			else if (!is_jpg(base))
 			{
 				strcpy(images[image_index].pathname, base);
 				images[image_index].type = image_type_JPG;
+				image_index++;
 			}
 			else if (!is_png(base))
 			{
 				strcpy(images[image_index].pathname, base);
 				images[image_index].type = image_type_PNG;
+				image_index++;
 			}		
-			image_index++;
-			
 		}
 		// 判断是否是路径文件
 		if (S_ISDIR(sta.st_mode))
@@ -154,7 +154,7 @@ void print_images(void)
 	printf("iamge_index = %d.\n", image_index);
 	for (i=0; i<image_index; i++)
 	{
-		printf("images[i].pathname = %s,		type = %d.\n", images[i].pathname, images[i].type);
+		printf("images[%d].pathname = %s,		type = %d.\n", i, images[i].pathname, images[i].type);
 	}
 }
 
