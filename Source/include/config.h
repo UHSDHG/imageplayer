@@ -23,25 +23,25 @@
 
 
  
-#define open_bmp_wangderearth1 "./image_manage/wangderearth1.bmp"
-#define open_bmp_sakura "./image_manage/sakura.bmp"
-#define open_bmp_mountainlu "./image_manage/mountainlu.bmp"
-#define open_bmp_Willo_lake "./image_manage/Willo_lake.bmp"
-#define open_bmp_penguin "./image_manage/penguin.bmp"
-#define open_bmp_penguin1 "./image_manage/penguin1.bmp"
+#define open_bmp_wangderearth1 "./image_manage/bmp/wangderearth1.bmp"
+#define open_bmp_sakura "./image_manage/bmp/sakura.bmp"
+#define open_bmp_mountainlu "./image_manage/bmp/mountainlu.bmp"
+#define open_bmp_Willo_lake "./image_manage/bmp/Willo_lake.bmp"
+#define open_bmp_penguin "./image_manage/bmp/penguin.bmp"
+#define open_bmp_penguin1 "./image_manage/bmp/penguin1.bmp"
 
 
-#define open_jpeg_sakura "./image_manage/sakura.jpeg"
-#define open_jpeg_GEM "./image_manage/GEM.jpeg"
-#define open_jpeg_Jey "./image_manage/Jey.jpeg"
-#define open_jpeg_Jey1 "./image_manage/Jey1.jpeg"
-#define open_jpeg_animal "./image_manage/animal.jpeg"
+#define open_jpeg_sakura "./image_manage/jpeg/sakura.jpeg"
+#define open_jpeg_GEM "./image_manage/jpeg/GEM.jpeg"
+#define open_jpeg_Jey "./image_manage/jpeg/Jey.jpeg"
+#define open_jpeg_Jey1 "./image_manage/jpeg/Jey1.jpeg"
+#define open_jpeg_animal "./image_manage/jpeg/animal.jpeg"
 
 
 #define open_png_sakura "./image_manage/png/sakura.PNG"
 #define open_png_GEM "./image_manage/png/GEM.PNG"
-#define open_png_space "./image_manage/space.PNG"
-#define open_png_Jey "./image_manage/Jey.PNG"
+#define open_png_space "./image_manage/png/space.PNG"
+#define open_png_Jey "./image_manage/png/Jey.PNG"
 
 
 #define PNG_BYTES_TO_CHECK 4 
@@ -80,10 +80,10 @@ typedef struct BITMAPINFOHEADER
     u_int32_t biYPelsPerMeter;   //垂直分辨率，单位是像素/米
     u_int32_t biClrUsed;   //说明位图使用的调色板中的颜色索引数，为0说明使用所有
     u_int32_t biClrImportant;   //说明对图像显示有重要影响的颜色索引数，为0说明都重要
-}BITMAPINFODEADER ;  
+}BITMAPINFODEADER, *BITMAPFILEHEADER_P ;  
 #pragma pack();
 
-BITMAPFILEHEADER bmp_bitmaphead;
+
 
 
 
@@ -158,14 +158,13 @@ typedef struct png_picin
 
 
 
-int is_bmp(bmp_picinfo * pdata);
+int is_bmp(const char *pathname);
 int is_jpg(const char *pathname);
 int is_png(const char * pathname);
 
 
 
 void display_bmp(const      char * pdata);
-
 int display_jpg(const char *pdata);
 int display_png(const char * pathname);
 

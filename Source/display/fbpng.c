@@ -1,4 +1,9 @@
+/*
+参考代码：https://blog.csdn.net/weixin_42462202/article/details/84937879
+https://www.cnblogs.com/xiaoxiaoboke/archive/2012/02/13/2349765.html
 
+
+*/
 
 
 
@@ -8,20 +13,9 @@
 #include "config.h"
 
 #include <png.h>
-
 #include <pngstruct.h>
-
 #include <pngconf.h>
 #include <pnginfo.h>
-
-
-
-
-
-int check_if_png(char *file_name, FILE **fp)
-{
-   
-}
 
 
 
@@ -51,7 +45,7 @@ int is_png(const char * pathname){
 
 }
 
-int read_png(png_picinfop pic_data){
+static int read_png(png_picinfop pic_data){
 	   debug("I am here.\n");
 	   
 
@@ -170,7 +164,6 @@ int read_png(png_picinfop pic_data){
  
     }   
 
-		
 	   /* Clean up after the read, and free any memory allocated.  REQUIRED.读取后进行清理，并释放分配的任何内存。必需的。 */
 	   png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
 	
@@ -204,7 +197,6 @@ int display_png(const char * pathname){
 
 	// display png
 	fb_open();
-	
 	fb_draw_png(pic_data);
 
 	//释放资源

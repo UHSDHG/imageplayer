@@ -1,7 +1,5 @@
-#include "config.h"
-
+#include "config.h" 
 #include <stdio.h>
-
 #include "image_manage.h"
 
 
@@ -33,11 +31,12 @@ void test()
 	//scan_image2("./image_manage");
 	//display_jpeg(open_jpeg_sakura);
 	//debug("-------------------------test\n\n\n");
-
+	display_bmp(open_bmp_mountainlu);
 	//print_images();
-	display_png(open_png_GEM);
+	//display_png(open_png_GEM);
 	//show_images();
 	sleep(1);
+	//display_png(open_png_sakura);
 
 	
 	while(1){
