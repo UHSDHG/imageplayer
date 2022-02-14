@@ -180,3 +180,49 @@ void show_images(void)
 	}
 }
 
+
+
+void TS_UPDOWN(){
+
+//触摸检测
+int buttons_fd;
+int key_value, i = 0, count;
+int index = 0;
+struct input_event ev;
+buttons_fd = open(DEVICE_KEY, O_RDWR);
+if(buttons_fd < 0){
+	perror("open device buttons");
+	
+	exit(1);
+	}
+	
+for(;;)
+{
+	memset(&ev, 0, sizeof(struct input_event));
+	if(0 == (count = read(buttons_fd, &ev, sizeof(struct input_event)))){
+		perror("read event2fd failed!\n");
+		close(buttons_fd);
+		exit(1);
+
+	}
+	
+	if(EV_ABS == ev.type && ABS_X == ev.code){
+		if(ev.value < 256 ) index++;
+		else if(768 < ev.value) index--;
+		if(index < 0) index = image_index;
+		if(index > image_index) index = 0;
+		display_jpg(images[index].pathname);
+	}
+
+	
+	}
+
+
+close(buttons_fd);
+
+
+// 根据内容进行触摸操作
+
+
+}
+

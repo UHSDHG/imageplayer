@@ -3,6 +3,7 @@
 
 
 #include <stdio.h>
+#include <linux/input.h>
 
 #include <sys/types.h>
 
@@ -46,7 +47,8 @@
 
 #define PNG_BYTES_TO_CHECK 4 
 
-
+// 定义系统中的触摸屏设备的设备名
+#define DEVICE_KEY "/dev/input/event2"
 
 /**********************************结构体封装******************************************/
 //bmp
@@ -171,6 +173,7 @@ int display_png(const char * pathname);
 int scan_image(const char *path);
 void print_images(void);
 void show_images(void);
+void TS_UPDOWN();
 
 
 

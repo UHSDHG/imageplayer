@@ -33,9 +33,11 @@ void test()
 	//display_jpeg(open_jpeg_sakura);
 	//debug("-------------------------test\n\n\n");
 	//display_bmp(open_bmp_mountainlu);
-	print_images();
+	//print_images();
 	//display_png(open_png_GEM);
+	TS_UPDOWN();
 	show_images();
+	
 	sleep(1);
 	//display_png(open_png_sakura);
 
