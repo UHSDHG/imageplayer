@@ -3,9 +3,11 @@
 
 
 #include <stdio.h>
-#include <linux/input.h>
+#include <linux/input.h>s
 
 #include <sys/types.h>
+#include "image_manage.h"
+
 
 //#undef DEBUG //≤ª±‡“Î
 
@@ -172,7 +174,9 @@ int display_png(const char * pathname);
 
 int scan_image(const char *path);
 void print_images(void);
-void show_images(void);
+//void show_image(void);
+void show_image(image_info_t* image);
+
 void TS_UPDOWN();
 
 

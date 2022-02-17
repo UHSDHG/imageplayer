@@ -157,9 +157,9 @@ void print_images(void)
 		printf("images[%d].pathname = %s,		type = %d.\n", i, images[i].pathname, images[i].type);
 	}
 }
+/*
 
-
-void show_images(void)
+void show_image(void)
 {
 	int i;
 
@@ -179,6 +179,28 @@ void show_images(void)
 		sleep(2);
 	}
 }
+*/
+/*
+image_type_BMP,
+image_type_JPG,
+image_type_PNG,
+image_type_UNKNOW
+void display_bmp(const char * pdata);
+int display_jpg(const char *pdata);
+int display_png(const char * pathname);
+*/
+
+void show_image(image_info_t* image)
+{
+
+	switch(image->type){
+		case image_type_BMP:display_bmp(image->pathname);break;
+		case image_type_JPG:display_jpg(image->pathname);break;
+		case image_type_PNG:display_png(image->pathname);break;
+		default:debug("image type unkonw\n");break;
+	}
+}
+
 
 
 
@@ -207,11 +229,12 @@ for(;;)
 	}
 	
 	if(EV_ABS == ev.type && ABS_X == ev.code){
-		if(ev.value < 256 ) index++;
+		if(ev.value < 256 ) index++;//ÆÁÄ»×ó±ß
 		else if(768 < ev.value) index--;
-		if(index < 0) index = image_index;
-		if(index > image_index) index = 0;
-		display_jpg(images[index].pathname);
+		if(index < 0) index = image_index - 1;// ÆÁÄ»
+		if(index >= image_index) index = 0;
+		debug("***************index is %d********************\n", index);
+		show_image(&images[index]);
 	}
 
 	
