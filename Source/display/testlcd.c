@@ -15,11 +15,12 @@ void test()
 {
 
 	
+	
+	image_manage_init();
 
+	scan_image3("./image_manage");
 
-	scan_image2("./image_manage");
-
-	TS_UPDOWN();
+	TS_UPDOWN3();
 
 	
 	sleep(1);

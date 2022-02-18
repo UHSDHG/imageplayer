@@ -49,6 +49,9 @@
 
 #define PNG_BYTES_TO_CHECK 4 
 
+
+// image_manage
+#define imaeg_manage_default_size 1
 // 定义系统中的触摸屏设备的设备名
 #define DEVICE_KEY "/dev/input/event2"
 
@@ -179,6 +182,10 @@ void show_image(image_info_t* image);
 
 void TS_UPDOWN();
 
+image_manager_t * image_manage_init();
+
+int scan_image3(const char *path);
+void TS_UPDOWN3();
 
 
 
