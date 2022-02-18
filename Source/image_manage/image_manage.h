@@ -5,6 +5,8 @@
 
 #define PATHNAME_LEN 256
 #define MAX_IMAGES_CNT 100
+
+
 typedef enum image_type
 {
 	image_type_BMP,
@@ -16,6 +18,7 @@ typedef enum image_type
 
 // 结构体用来封装一个图片的信息
 
+#pragma pack(1);
 
 typedef struct image_info{
 	char pathname[PATHNAME_LEN];//图片文件的pathname
@@ -23,7 +26,15 @@ typedef struct image_info{
 
 
 }image_info_t, *image_info_tp;
+#pragma pack();
+#pragma pack(1);
 
+typedef struct image_manager{
+	image_info_t **images;
+	int index;
+	int max;
+}image_manager_t;
+#pragma pack();
 
 
 #endif

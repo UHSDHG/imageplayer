@@ -196,13 +196,16 @@ int display_jpg(const char * filename)
 	//实例化pic_data
 	debug("i am here\n");
 	jpeg_picinfop pic_data = NULL;
-	pic_data = (jpeg_picinfop)malloc(sizeof(jpeg_picinfo));
+	if(NULL == (pic_data = (jpeg_picinfop)malloc(sizeof(jpeg_picinfo)))){
+		debug("pic_data %s not jpeg file\n", filename);
+		return -1;
+	}
   	pic_data->pathname = filename;
 
 	//判断是否为jpeg文件
 	 if(-1 == is_jpg(pic_data->pathname)) {
 	debug("%s not jpeg file\n", pic_data->pathname);
-		return -1;
+		goto pic_data_free;
   	}
   	debug("%s is jpeg file\n", pic_data->pathname);
 
@@ -219,6 +222,7 @@ int display_jpg(const char * filename)
 
 	//释放资源
 	free(pic_data->data);
+pic_data_free:
 	free(pic_data);
 	return 0;
 

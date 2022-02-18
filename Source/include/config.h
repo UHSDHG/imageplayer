@@ -23,32 +23,11 @@
 #endif
 
 /*************************************常用配置*****************************************/
-
-
- 
-#define open_bmp_wangderearth1 "./image_manage/bmp/wangderearth1.bmp"
-#define open_bmp_sakura "./image_manage/bmp/sakura.bmp"
-#define open_bmp_mountainlu "./image_manage/bmp/mountainlu.bmp"
-#define open_bmp_Willo_lake "./image_manage/bmp/Willo_lake.bmp"
-#define open_bmp_penguin "./image_manage/bmp/penguin.bmp"
-#define open_bmp_penguin1 "./image_manage/bmp/penguin1.bmp"
-
-
-#define open_jpeg_sakura "./image_manage/jpeg/sakura.jpeg"
-#define open_jpeg_GEM "./image_manage/jpeg/GEM.jpeg"
-#define open_jpeg_Jey "./image_manage/jpeg/Jey.jpeg"
-#define open_jpeg_Jey1 "./image_manage/jpeg/Jey1.jpeg"
-#define open_jpeg_animal "./image_manage/jpeg/animal.jpeg"
-
-
-#define open_png_sakura "./image_manage/png/sakura.PNG"
-#define open_png_GEM "./image_manage/png/GEM.PNG"
-#define open_png_space "./image_manage/png/space.PNG"
-#define open_png_Jey "./image_manage/png/Jey.PNG"
-
-
 #define PNG_BYTES_TO_CHECK 4 
 
+
+// image_manage
+#define image_manage_default_size 1
 // 定义系统中的触摸屏设备的设备名
 #define DEVICE_KEY "/dev/input/event2"
 
@@ -152,64 +131,23 @@ typedef struct png_picin
 
 
 /***********************************函数原型******************************************/
-
-
-
-
-
-
-
 int is_bmp(const char *pathname);
 int is_jpg(const char *pathname);
 int is_png(const char * pathname);
-
-
 
 void display_bmp(const      char * pdata);
 int display_jpg(const char *pdata);
 int display_png(const char * pathname);
 
-
-
-
-int scan_image(const char *path);
 void print_images(void);
 //void show_image(void);
 void show_image(image_info_t* image);
 
-void TS_UPDOWN();
+image_manager_t * image_manage_init();
 
-
-
-
-
-
-
-
+int scan_image3(const char *path);
+void TS_UPDOWN3();
 
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
