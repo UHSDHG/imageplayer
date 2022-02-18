@@ -142,9 +142,7 @@ int display_png(const char * pathname);
 void print_images(void);
 //void show_image(void);
 void show_image(image_info_t* image);
-
 image_manager_t * image_manage_init();
-
 int scan_image3(const char *path);
 void TS_UPDOWN3();
 
